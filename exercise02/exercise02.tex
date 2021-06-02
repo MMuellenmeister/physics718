@@ -1,0 +1,195 @@
+\documentclass[a4paper, draft=False]{scrartcl}
+% load exercise-specific preamble
+\usepackage{physics718_ss21}
+\usepackage{shapepar}
+% Write number of the exercise sheet
+\begin{document}
+
+\input{physics718_ss21_header}
+
+
+\begin{exam}[Presence]{Presence}
+  \begin{instructions}[Presence exercises]
+
+    \begin{problem*}\textbf{Simple class}
+
+      In their most simple form, python classes can be used to store data in
+      objects (instances of the class). The data is stored in attributes
+      (member variables, denoted with \py{self.<varname>} where \py{self} is
+      stands for the instance of the class). Storing data in an object allows
+      \emph{encapsulating} it together with functions that operate on that data
+      (also sometimes called \emph{state} of the object) or modify it.
+
+      Unpack the latest exercise directory and navigate to
+      \directory{physics718/exercises/exercise02}. Open the notebook
+      \texttt{exercise02\_attendance.ipynb} and find the beginning of the definition
+      for the \py{Person} class. Implement the class in the order of the tasks
+      below. Feel free to test your class and different methods interactively in
+      the notebook. For your convenience a test is also included.
+
+      \begin{parts}
+      \item Implement the \py{__init__} constructor method of the \py{Person} class, so
+        that a person object can be instantiated with a first name, last
+        name and age. Set the class attributes \py{first_name}, \py{last_name}
+        and \py{age}.
+        \begin{pythoncode}
+          # `person1` is object of the class/type `Person`
+          person1 = Person("Max", "Power", 38)
+        \end{pythoncode}
+      \item Make sure that the attributes of your object are properly set.
+        Print the \py{first_name}, \py{last_name} and \py{age} of a person
+        object, e.g. \py{print(person.first_name)}
+      \item Use the attributes to change the state of an already instantiated
+        \py{Person} object.
+      \item Implement the method (member function) \py{full_name},
+        which returns a string with the full name of the person, i.e.
+        \py{"<first name> <last name>"}.
+      \item Use the \py{full_name} function to implement the \py{__str__}
+        method, which by convention returns a readable string representation
+        of the class, which is called when the object is converted to a string
+        (e.g.\ implicitly when printing). Make sure your implementation works
+        by printing the person object.
+        \begin{pythoncode}
+          person2 = Person("Margaret", "Hamilton", 84)
+          print(person2)  # Margaret Hamilton
+        \end{pythoncode}
+      \item Also implement the \py{say_hello} method which prints \texttt{Hello <first name> <last name>}.
+      \item Let's make use of the age information. Implement the method
+        \py{older_than(self, other)}, that takes one other person and returns \py{True}
+        if the current person is older than the other person. Check that
+        your function works, e.g.\
+        \begin{pythoncode}
+          person1.older_than(person2)  # False
+        \end{pythoncode}
+      \item Add  syntactic sugar to be able to compare the age of
+        persons with the greater-than \py{>} operator, e.g.\
+        \begin{pythoncode}
+          person2 > person1  # True
+        \end{pythoncode}
+        For that purpose, implement the \py{__gt__} method (e.g. set it to be equal
+        to the \py{older_than} method).
+
+        \notebox{In reality one wouldn't do this, because we might
+          add properties like \py{size}, \py{weight} etc.\ later and
+          then the simple comparison operators are ambivalent.}
+      \end{parts}
+    \end{problem*}
+    \begin{problem*}\textbf{Extend \texttt{Vector2D}}
+
+      Go in the notebook to section \emph{2. Extending a class}. Read the text,
+      instantiate some vectors and do some calculations with them to get
+      familiar. Then open the file \texttt{vector\_2d.py} with VS Code to extend
+      it.
+
+      \begin{parts}
+      \item Implement the \py{/} operator via the \py{__truediv__} method for
+        division with a scalar.
+      \item Implement a \py{normal} method which returns a normalized vector.
+      \item Implement a method \py{angleTo} to get the angle between two vectors.
+      \end{parts}
+    \end{problem*}
+
+    \begin{problem*}\textbf{Particle via inheritance}
+
+      Imagine that we want to describe a particle by its velocity vector and its
+      mass, but are not interested in its position. Then, we can implement a
+      particle as a sub-class of \py{Vector2D}. Go to section 3 in the notebook
+      and implement the \py{Particle} class.
+
+        Mind that the x and y should represent the particle velocity for the
+        purpose of this problem.
+
+    \begin{parts}
+      \item Implement an \py{__init__(self, vx, vy, mass)} method that sets the
+        x/y-components of the super class and sets the mass property
+        (hint: use \py{super().__init__}).
+      \item Implement the \py{momentum()} and \py{energy()} methods. Note that
+        \py{momentum()} should return an instance of \py{Vector2D}
+    \end{parts}
+    \end{problem*}
+  \end{instructions}
+\end{exam}
+
+\begin{exam}[Homework]{Homework}
+  \begin{instructions}[\textbf{Homework}]
+    \begin{problem*}[\auto]\textbf{Particle via class composition}
+
+      Properties of a class can themselves be instances of complex classes. This
+      is known as composition. This can be described as a \emph{has a}
+      relationship in contrast to the \emph{is a} relationship of inheritance.
+
+      We can use that to implement a new \py{Particle} class which is aware of both
+      its momentum and position, which can be stored as \py{Vector2D} properties.
+
+      Open the file \texttt{exercise02\_homework.py} to implement it.
+
+      \begin{parts}
+        \item\PTs{2} Implement the particle constructor
+          \begin{pythoncode}
+            __init__(self, position, momentum, mass)
+          \end{pythoncode}
+          where \py{position} and \py{momentum} are
+          instances of \py{Vector2D}.
+          Set the class properties of the same names as the arguments.
+        \item\PTs{2} Implement the method \py{get_velocity()} which returns a
+          \py{Vector2D} with the particle velocity calculated from the momentum
+          and mass.
+        \item\PTs{2} Implement the method \py{get_energy()} which returns the
+          kinetic energy of the particle.
+          \py{Vector2D} with the particle velocity calculated from the momentum
+          and mass.
+         \item\PTs{2} We can easily obtain the momentum and mass of a particle
+           easily via properties, e.g.\
+           \begin{pythoncode}
+             p = Particle(Vector2D(0, 0), Vector2D(2, 1), 1)
+             print(p.momentum)  # Vector2D(2, 1)
+             print(p.mass)  # 1
+           \end{pythoncode}
+           For the velocity and energy however, we need to call methods (with
+           parentheses), e.g. \py{p.get_velocity()}. Python allows adding a
+           so-called ``\py{@property}-decorator'' to the top of methods, which
+           tells python to treat the function below as a property and allows you to
+           call it without the parentheses, e.g. \py{print(particle.velocity)}.
+
+           Finish the implementation of the \py{velocity} property method and
+           create likewise an \py{energy} property method. Both should
+           return the return values of the previously defined getter functions.
+      \end{parts}
+    \end{problem*}
+
+\begin{problem*}[\auto]\textbf{Complex number class with operators}
+
+  Python has support for complex numbers built in (try typing \py{c = 1 + 2j}),
+  but we will try implementing our own \py{Complex} number class. This time there is
+  no template and you have to write the class mostly from scratch, but now you
+  have other classes (e.g. \py{Vector2D}) to give you ideas. Don't use python's
+  complex numbers internally.
+  \begin{parts}
+  \item\PTs{1} Write the class \py{Complex} with an \py{__init__} method
+    that take real and imaginary component and sets the properties \py{self.real} and
+    \py{self.imag}.
+   \item\PTs{2} Implement the operator methods for equality comparison
+     (\py{==}), for the addition and subtraction (\py{+}, \py{-}) of complex numbers .
+   \item\PTs{2} Implement the methods \py{magnitude}, \py{conjugate} and
+     \py{to_polar} to get the magnitude, complex conjugate and polar
+     representation ($r$, $\phi$) of a complex number, respectively.
+   \item\PTs{3} Implement the multiplication of two complex numbers with the
+     operator \py{*}. Allow one of the two numbers to be a scalar number.
+  \end{parts}
+  You can implement other methods if you like, but they are not required. For
+  example for interactive debugging it might help to implement the \py{__str__}
+  and \py{__repr__} methods.
+\end{problem*}
+
+
+\notebox{If you liked the interactive experimentation in the Jupyter notebook
+  during the attendance exercise, feel free to also prototype your homework
+  solutions in a notebook and just paste/import them back into the homework
+  submission file \texttt{exercise02\_homework.py} once you are done. Make sure
+  that at least the tests pass, which are minimal a requirement for getting
+  the points.}
+  \end{instructions}
+
+\end{exam}
+
+\end{document}

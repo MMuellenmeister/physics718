@@ -1,0 +1,235 @@
+\documentclass[a4paper, draft=False]{scrartcl}
+% load exercise-specific preamble
+\usepackage{physics718_ss21}
+
+% Write number of the exercise sheet
+\examNum{1}
+\begin{document}
+
+\input{physics718_ss21_header}
+
+\begin{exam}[Presence]{Presence}
+  \begin{instructions}[Introduction]
+
+    Welcome to the exercises in \emph{Physics718: Programming for Physics and Astronomy} in
+    the Summer Semester 2021. This year for the first time the programming
+    language \emph{Python} will be taught, which has become the most popular
+    language for data analysis in both HEP and the private sector.
+
+    We assume familiarity with basic programming concepts such as variables,
+    functions and control flow (\py{if}, \py{for}, \ldots) and working in a
+    shell with command line programs. We will repeat some basics in the first
+    two exercises, but this can only be very limited in scope, so if you learned
+    a different programming language in the past or are just rusty, there is
+    plenty of beginner self-study material on the internet which you can work
+    through in parallel to the course, for example the
+    \href{https://swcarpentry.github.io/python-novice-inflammation}{Python
+      Introduction}\footnote{%
+      \url{https://swcarpentry.github.io/python-novice-inflammation}} by
+    Software Carpentry to name just one.
+  \end{instructions}
+
+  \begin{instructions}[Obtaining the exercise repository]
+
+    You can download the code repository that accompanies the exercise sheet
+    from eCampus as a \texttt{physics718\_ex01.zip} archive. To unpack it, you can use
+    your file manager or the \bash{unzip} command in the linux/Mac terminal.
+  \end{instructions}
+
+  \begin{instructions}[Getting familiar with the development environment]
+
+    Make sure you that you have properly installed the course environment with
+    \texttt{conda} and VS~Code according to the instructions
+    \href{https://ecampus.uni-bonn.de/goto_ecampus_fold_2146080.html}{%
+      on eCampus}\footnote{%
+      \url{https://ecampus.uni-bonn.de/goto_ecampus_fold_2146080.html}}.
+
+    \begin{problem*}\textbf{Command line basics and simple control flow}
+
+      Open a terminal and activate the conda environment for the physics718
+      exercise via
+
+      \begin{bashcode}
+        conda activate physics718
+      \end{bashcode}
+
+      Your terminal prompt should now show \texttt{(physics718)} as your active
+      Python environment. While in it, the \texttt{python} command points to the
+      Python executable installed by conda instead of your default system
+      Python.
+
+      In your terminal, use \bash{cd} to navigate to the sub-directory
+      \directory{physics718/exercises/exercise01}.
+      \begin{parts}
+      \item Type \bash{python} press \keys{\return}. Now you are in a basic
+        interactive Python interpreter. You can type a line of code, press
+        \keys{\return} and the code will be evaluated and the result printed.
+        This can be your quick calculator. Find out the Python result for
+        $0.1 + 0.2$ in Python (remember how computers encode numbers). To exit
+        the Python execute the \py{exit()} function or type \texttt{Ctrl+d}.
+      \item Can you find your Python version in the output on the screen? Also
+        find how to print the version via a command line argument to
+        \texttt{python} (hint: check \bash{python -h}).
+        % Bonus: Can you also find out where on the file system the python executable is located?
+      \item Instead of the basic Python interpreter, for interactive work it
+        is more convenient to use Jupyter/IPython, which offer better
+        auto-completion and help. Run \bash{ipython}. To print 100
+        numbers from 0 to 99 you can for example use
+        \begin{pythoncode}
+          for i in range(100):
+              print(i)
+        \end{pythoncode}
+
+        Modify the code to only print odd numbers.
+
+        Hint: Use \py{if} and
+        the modulo operator \py{%}. Try out how the operator works
+          interactively, e.g.\ type \py{9 % 3}.
+            Also remember that 0's are treated as boolean \py{False} inside
+            conditions while all other numbers are \py{True}, you can validate
+            this with e.g.\ \py{print(bool(0))} and \py{print(bool(1))}.
+
+          \item In Jupyter you can find help for all Python objects with documentation
+            strings via the question mark symbol \texttt{?}. To get a general
+            IPython help, just type \texttt{?} end press \keys{\return}. Find one
+            other way to access the help of a Python object. To exit the help pager, press \keys{q}.
+          \item Find the help for the print function via \py{print?}. Add a
+            keyword argument to the \py{print} function to print all numbers in a
+            single row.
+          \item  When given an argument, the \texttt{python} command can be used to run
+            Python programs. Run \bash{python zen.py} to be enlightened.
+          \end{parts}
+        \end{problem*}
+
+        \begin{problem*}\textbf{Visual Studio Code}\\
+          If you want to re-use and share your code, you need to organize it into
+          files, which is best done via an editor or integrated development
+          environment (IDE). In this course we use VS~Code, a modern extensible open
+          source editor which offers an IDE-like experience via the Python extension.
+          Run \bash{code} inside the terminal with the conda environment to open
+          VS~code.
+          \begin{parts}
+          \item Check that the Python
+            version is 3.7 and that you are in a conda environment. If not, you can
+            also change your Python interpreter and environment from withing conda
+            via \keys{Ctrl+Shift+P} and typing and selecting \menu{Python: Select
+              Interpreter}\footnote{\url{https://code.visualstudio.com/docs/python/environments}}.
+          \item Open the file \texttt{exercise01\_attendance.py}. Maybe you will be
+            prompted to install the Python extension. Open the extension
+            menu on the left (\keys{Ctrl+Shift+X}) and if the \emph{Python} extension is
+            not installed yet, search for it in the marketplace and install it.
+            If you have time, feel free to look for other useful extensions.
+          \item Complete the function template for \py{is_odd()}. To test whether
+            your implementation is correct, run the tests for the attendance
+            exercise. For that you can just execute the file, either in the terminal
+            with \bash{python exercise01_attendance.py} or or by clicking the
+            \menu{$\triangleright$} button in the top right of VS~Code. Or use the
+            \texttt{unittest} module directly by running \bash{python -m unittest}
+            (make sure you are in the \texttt{exercise01} sub-directory).
+          \item Complete the function \py{sum_of_odds_while()} which calculates the
+            sum of odd numbers $1, 3 \ldots N$ until all tests for that function
+            pass. Use a \py{while} loop over natural numbers and your \py{is_odd()}
+            function. (There is a trivial mathematical way calculate this sum which
+            is used in the test but we're doing an exercise here so it please solve
+            it the intended way first.)
+          \item One more efficient method to generate odd numbers is by providing a
+            step argument to the built-in \py{range()} function. Look up the
+            documentation for that function in VS-code by hovering your mouse over
+            the function name after writing/uncommenting it. Use that to implement
+            \py{sum_of_odds_builtins()}.
+          \end{parts}
+        \end{problem*}
+
+        \begin{problem*}\textbf{Jupyter Notebooks}
+
+          Jupyter Notebooks are interactive programming environments which are great
+          for exploratory programming and data-analysis. Instead of entering code in
+          line by line as we already did with the normal python interpreter,
+          notebooks allow you to organize code in so-called \emph{cells} which can
+          contain arbitrary numbers of lines of code and can be executed arbitrary
+          order. One advantage is that you can see your results right away and this
+          is especially useful when plotting graphs, which we will do later, because
+          Jupyter Notebooks allow displaying the plots in-line together with the
+          code. They also allow for the creation of text cells (in the \href{%
+            https://jupyter-notebook.readthedocs.io/en/latest/examples/Notebook/Working%20With%20Markdown%20Cells.html
+          }{\emph{markdown}} format) and thus enable literate programming where code
+          and documentation are intermixed. We recommend one of two ways to use
+          Jupyter Notebooks:
+
+          \begin{description}
+          \item[via Jupyter Lab:] The most widespread method is to use Jupyter from the web-browser
+            interface. For that, type the command
+            \begin{bashcode}
+              jupyter lab
+            \end{bashcode}
+            into a terminal with the physics718 environment and a browser window
+            with the URL being something like \texttt{localhost:8888} should open.
+            What happens is that the terminal command creates a Jupyter Server which
+            is running at port 8888 on your computer (\texttt{localhost}) and you
+            interact with it via the Jupyter Lab client in the web browser. When you
+            read the online documentation for Jupyter, it will be mostly targeted at
+            users of the web interface, so I think some familiarity is good.
+          \item[via VS Code:] VS~Code supports working with directly with Jupyter Notebooks, for
+            that you just need to open a notebook file (ending with \texttt{.ipynb})
+            with VS~Code, thus you can do everything you need from VS~code without
+            requiring you to open your browser. VS~Code still launches a Jupyter
+            server in the background, but it abstracts this away.
+          \end{description}
+
+          You can try both, but be careful when using them at the same time, as to
+          you might overwrite your progress accidentally.
+
+          \textbf{Task:} Open the file \texttt{exercise01\_attendance.ipynb} and
+          work through the exercises in the notebook and get familiar with it.
+        \end{problem*}
+      \end{instructions}
+    \end{exam}
+
+    \newpage
+    \begin{exam}[Homework]{Homework}
+
+      \begin{instructions}[\textbf{Homework}]
+
+        For the homework you will practice writing some more interesting functions.
+        Write the solutions to the following tasks by filling in the missing code in
+        \texttt{exercise01\_homework.py}. Remember to run the tests by running the file
+      \end{instructions}
+
+      \begin{problem}[4]\textbf{Odd Fibonacci numbers}
+
+        Write a function \py{odd_fibonacci_numbers(n_numbers)} that returns a
+        list of \py{n_numbers} odd Fibonacci
+        numbers\footnote{\url{https://en.wikipedia.org/wiki/Fibonacci_number}},
+        starting with $1, 1, 3, 5, \ldots$. Don't rely on external packages.
+      \end{problem}
+      \begin{problem*}[\auto]\textbf{From sum of squares to variance}
+
+        \begin{parts}
+        \item\PTs{2} Write a function \py{sum_square_difference} that takes a list
+          of numbers and returns the difference between the sum of the squares and
+          the square of the sum $\sum_i x_i^2 - \left(\sum_i x_i\right)^2$.
+        \item\PTs{2} In python functions are first-class object, that means
+          that functions can take other function objects as arguments (just omit
+          the parentheses). Use that to write a more general version of
+          \py{sum_square_difference} by implementing the higher order function
+          \py{func_square_difference} which accepts an arbitrary aggregating
+          function $f$ and returns $f(x_1^2\ldots x_N^2) - f(x_1\ldots x_N)^2$.
+        \item\PTs{2} The variance of a collection can be calculated obtained with
+          \begin{equation*}
+            \mathrm{Var}(\vec{x}) = \mathrm{mean}(x_1^2, \ldots, x_N^2) -
+            \mathrm{mean}(x_1, \ldots,  x_N)^2
+          \end{equation*}
+          Implement the \py{mean} function. Use that as an argument to the previously defined
+          \py{func_square_difference} function to calculate and return the variance
+          in the \py{variance} function.
+        \end{parts}
+      \end{problem*}
+
+
+        \notebox{
+          \textbf{Submission deadline:} One week after your exercise, on the day when the
+          exercise would be if the exercises weren't bi-weekly.
+        }
+    \end{exam}
+
+  \end{document}
