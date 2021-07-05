@@ -1,0 +1,9 @@
+score for environment "D:\Programme\Python3_8_MiniConda\envs\TF2_5\python.exe":
+    keras time: 
+       cpu: 
+       model_compillation time: 2.55 ms ± 264 µs per loop (mean ± std. dev. of 5 runs, 2 loops each)
+       model_fitting      time: 3min 44s ± 2.99 s per loop (mean ± std. dev. of 5 runs, 2 loops each)
+       gpu: 
+       model_compillation time: 2.72 ms ± 252 µs per loop (mean ± std. dev. of 5 runs, 2 loops each)
+       model_fitting      time: 4min 30s ± 5 s per loop (mean ± std. dev. of 5 runs, 2 loops each)
+
